@@ -1,6 +1,9 @@
 package com.mikhail.spring.mvc_hibernate_aop.entity;
 
+import org.springframework.validation.annotation.Validated;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "employees")
@@ -41,6 +44,7 @@ public class Employee {
         this.id = id;
     }
 
+    @Size(min = 2, message = "name length must be more than 2 symbols")
     public String getName() {
         return name;
     }

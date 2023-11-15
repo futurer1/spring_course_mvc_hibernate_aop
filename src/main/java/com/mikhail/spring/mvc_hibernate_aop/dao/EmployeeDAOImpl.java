@@ -18,7 +18,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public List<Employee> getAllEmployees() {
 
         Session session = sessionFactory.getCurrentSession();
@@ -30,4 +29,34 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         return allEmployees;
     }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        Session session = sessionFactory.getCurrentSession();
+
+        // при совпадении primary key будет происходить update
+        session.saveOrUpdate(employee);
+    }
+
+    @Override
+    public void delEmployee(int empId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Employee> query = session.createQuery("delete from Employee where id =:employeeId");
+        // bind значения на метку
+        query.setParameter("employeeId", empId);
+        query.executeUpdate();
+
+        //Employee employee = session.get(Employee.class, empId);
+        //session.delete(employee);
+    }
+
+    @Override
+    public Employee getEmployee(int empId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Employee employee = session.get(Employee.class, empId);
+        return  employee;
+    }
+
 }
