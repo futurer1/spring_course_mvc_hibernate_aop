@@ -15,6 +15,7 @@ public class Employee {
     private int id;
 
     @Column(name = "name")
+    @Size(min = 2, message = "name length must be more than 2 symbols")
     private String name;
 
     @Column(name = "surname")
@@ -24,6 +25,8 @@ public class Employee {
     private String department;
 
     @Column(name = "salary")
+    @Min(value = 500, message = "must be >= than 500")
+    @Max(value = 1000, message = "must be <= than 1000")
     private int salary;
 
     public Employee() {
@@ -44,7 +47,6 @@ public class Employee {
         this.id = id;
     }
 
-    @Size(min = 2, message = "name length must be more than 2 symbols")
     public String getName() {
         return name;
     }
